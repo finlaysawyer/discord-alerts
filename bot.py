@@ -41,7 +41,7 @@ def create_embed(message: discord.Message, status: str, colour: int) -> discord.
     return embed
 
 
-def make_call(message: discord.Message):
+def make_call(message: discord.Message) -> None:
     """
     Initiates a call based on Twilio configuration
     :param message: Message to read out after initial message
@@ -58,11 +58,12 @@ def make_call(message: discord.Message):
             from_=config["number_from"],
         )
 
-        return logging.info(f"Initiated call with SID {call.sid}")
+        logging.info(f"Initiated call with SID {call.sid}")
 
 
 @bot.event
-async def on_message(message: discord.Message):
+async def on_message(message: discord.Message) -> None:
+    """Triggers a pending call when message is posted in alert channel"""
     if message.author.bot:
         return
 
@@ -73,7 +74,8 @@ async def on_message(message: discord.Message):
         await pending.add_reaction("\N{MOBILE PHONE}")
         logging.info(f"Pending message has been created by {message.author}")
 
-        def valid_reactions(user_reaction, member):
+        def valid_reactions(user_reaction, member) -> bool:
+            """Checks requirements for dispatching a call"""
             return (
                 user_reaction.message.id == pending.id
                 and str(user_reaction.emoji) == "\N{MOBILE PHONE}"
@@ -91,7 +93,7 @@ async def on_message(message: discord.Message):
 
         await pending.edit(embed=create_embed(message, "Dispatched", 0x88FF00))
         make_call(message)
-        return logging.info(f"Pending message has been dispatched by {author}")
+        logging.info(f"Pending message has been dispatched by {author}")
 
 
 if __name__ == "__main__":
