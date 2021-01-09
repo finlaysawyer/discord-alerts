@@ -1,0 +1,13 @@
+# Bot Configuration
+token: ''
+prefix: !
+alert_channel: 1234
+initial_message: An emergency alert has been recieved from Discord.
+timeout: 300
+
+# Twilio Configuration
+auth_token: ''
+account_sid: ''
+number_from: ''
+numbers:
+  - ''
