@@ -54,10 +54,10 @@ def make_call(message: discord.Message) -> None:
 
         call = client.calls.create(
             twiml=f"<Response>"
-                  f"<Say>"
-                  f"{config['initial_message']} {message.clean_content}"
-                  f"</Say>"
-                  f"</Response>",
+            f"<Say>"
+            f"{config['initial_message']} {message.clean_content}"
+            f"</Say>"
+            f"</Response>",
             to=number,
             from_=config["number_from"],
         )
