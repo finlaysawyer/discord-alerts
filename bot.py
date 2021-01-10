@@ -53,7 +53,11 @@ def make_call(message: discord.Message) -> None:
         logging.info(f"Calling {number} with message {message.clean_content}")
 
         call = client.calls.create(
-            twiml=f"<Response><Say>{config['initial_message']} {message.clean_content}</Say></Response>",
+            twiml=f"<Response>"
+                  f"<Say>"
+                  f"{config['initial_message']} {message.clean_content}"
+                  f"</Say>"
+                  f"</Response>",
             to=number,
             from_=config["number_from"],
         )
